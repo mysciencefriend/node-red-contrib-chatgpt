@@ -12,6 +12,7 @@ module.exports = (RED) => {
         "edit",
         "turbo",
         "gpt4",
+        "dalle3",
     ].map((item) => item.toLowerCase());
 
     // Main function that gets executed when a message is received
@@ -103,6 +104,45 @@ module.exports = (RED) => {
                     } else {
                         msg.payload = response.data.data[0].b64_json;
                     }
+
+                    // Set additional properties in the message
+                    msg.full = response;
+
+                    // Set node status
+                    node.status({
+                        fill: "blue",
+                        shape: "dot",
+                        text: "Response complete",
+                    });
+
+                    // Send the message
+                    node.send(msg);
+                    // Handle errors
+                } catch (error) {
+                    // Set node status
+                    node.status({
+                        fill: "red",
+                        shape: "dot",
+                        text: "Error",
+                    });
+                    if (error.response) {
+                        node.error(error.response.status, msg);
+                        node.error(error.response.data, msg);
+                    } else {
+                        node.error(error.message, msg);
+                    }
+                }
+            } else if (msg.topic === "dalle3") {
+                // Process messages with the "dalle3" topic
+                try {
+                    // Make a request to OpenAI API for image creation
+                    const response = await openai.images.generate({
+                        model: "dall-e-3",
+                        prompt: msg.payload,
+                        n: parseInt(msg.n) || 1,
+                        size: msg.size || "1024x1024",
+                    });
+                    msg.payload = response.data.data[0].url;
 
                     // Set additional properties in the message
                     msg.full = response;

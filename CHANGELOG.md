@@ -1,6 +1,12 @@
 
 # Change Log
 
+## [1.3.1] - 2024-07-08
+
+### Changed
+
+- Included support for image generation with the model `dall-e-3`
+
 ## [1.3.0] - 2024-07-08
 
 ### Changed

@@ -5,7 +5,7 @@
 ![Downloads](https://img.shields.io/npm/dt/node-red-contrib-custom-chatgpt.svg)
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-Supercharge your Node-RED flows with AI! Seamlessly integrate with OpenAI's powerful models like GPT-4 and DALL·E 2, and unlock a world of creative possibilities. Create imaginative chatbots, automate content generation, or build AI-driven experiences. The power of AI is just a node away!
+Supercharge your Node-RED flows with AI! Seamlessly integrate with OpenAI's powerful models like GPT-4o, DALL·E 2, and DALL·E 3 to unlock a world of creative possibilities. Create imaginative chatbots, automate content generation, or build AI-driven experiences. The power of AI is just a node away!
 
 ## Table of Contents
 
@@ -74,6 +74,12 @@ For detailed information on the usage of these modes, please refer to the [OpenA
 
    - [Optional] `msg.history` should be an array of objects containing the conversation history. [Default:`[]`]
 
+6. When `msg.topic` is set to `dalle3`:
+
+   - [Required] `msg.payload` should be a prompt of text description of the desired image.
+
+   - [Optional] `msg.size` should be a string of the desired image dimensions. [Default:`1024x1024`]
+   
 ### Additional optional properties
 
 The following optional inputs are supported - `msg.max_tokens`, `msg.suffix`, `msg.n`, `msg.temperature`, `msg.top_p`, `msg.presence_penalty`, `msg.frequency_penalty`, `msg.echo`, `msg.API_KEY` and `msg.ORGANIZATION`. See the nodes built-in help tab for more information on how they are used.

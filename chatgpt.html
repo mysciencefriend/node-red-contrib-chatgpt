@@ -27,6 +27,7 @@
                     { value: "image", label: "image"},
                     { value: "turbo", label: "turbo"},
                     { value: "gpt4", label: "gpt4"},
+                    { value: "dalle3", label: "dalle3"},
                     { value: "__EMPTY__", label: "read from msg.topic"},
                 ],
             }]});
@@ -72,7 +73,7 @@
 <script type="text/html" data-help-name="chatgpt">
 
     <h1>Description</h1>
-        <p>A Node-RED node that interacts with OpenAI machine learning models to generate text and image outputs like <a href="https://chat.openai.com/chat">ChatGPT</a> and <a href="https://openai.com/product/dall-e-2">DALL·E 2</a>.</p>
+        <p>A Node-RED node that interacts with OpenAI machine learning models to generate text and image outputs like <a href="https://chat.openai.com/chat">ChatGPT</a>, <a href="https://openai.com/product/dall-e-2">DALL·E 2</a>, and <a href="https://openai.com/product/dall-e-3">DALL·E 3</a>.</p>
     
     <h2>Setup</h2>
         <p>When editing the nodes properties, to get your <code>OPENAI_API_KEY</code> log in to <a href="https://chat.openai.com/chat">ChatGPT</a> then visit <a href="https://platform.openai.com/account/api-keys">https://platform.openai.com/account/api-keys</a> click "+ Create new secret key" then copy and paste the "API key" into the nodes <code>API_KEY</code> property value.</p>
@@ -177,7 +178,7 @@
         </ol>
     
     <h3>Details</h3>
-        <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>edit</code>, <code>image</code>, <code>turbo</code>, or <code>gpt4</code>.</p>
+        <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>edit</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
         
         <p>Alternatively you can set the Topic to <code>read from msg.topic</code> to set the behavior dynamically with incoming messages.</p>
         
@@ -202,6 +203,9 @@
         <p>Required <code>msg.payload</code> should be a well-written prompt.</p>
         <p>Optional <code>msg.history</code> should be an array of objects containing the conversation history. [Default:<code>[]</code>]</p>
 
+        <p>6. When <code>msg.topic</code> is set to <code>dalle3</code>:</p>
+        <p>Required <code>msg.payload</code> should be a prompt of text description of the desired image.</p>
+        <p>Optional <code>msg.size</code> should be a string of the desired image dimensions. [Default:<code>1024x1024</code>]</p>
     <h3>Links</h3>
         <ul>
             <li><a href="https://github.com/HaroldPetersInskipp/node-red-contrib-chatgpt">GitHub</a> - this node's GitHub repository.</li>
