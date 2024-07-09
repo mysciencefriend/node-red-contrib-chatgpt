@@ -38,14 +38,16 @@ With these, you're ready to configure your `node-red-contrib-custom-chatgpt` nod
 
 ## Usage
 
-With `node-red-contrib-custom-chatgpt`, you have the power to select the behavior of the node by setting the Topic property value to `completion`, `image`, `edit`, `turbo` , or `gpt4`. You can control the node with a single required message property `msg.payload` or dynamically set the behavior with incoming messages using `read from msg.topic`.
+With `node-red-contrib-custom-chatgpt`, you have the power to select the behavior of the node by setting the Topic property value to `gpt4o`, `image`, `edit`, `turbo` , or `gpt4`. You can control the node with a single required message property `msg.payload` or dynamically set the behavior with incoming messages using `read from msg.topic`.
 
 For detailed information on the usage of these modes, please refer to the [OpenAI API documentation](https://beta.openai.com/docs/).
 
-1. When `msg.topic` is set to `completion`:
+1. When `msg.topic` is set to `gpt4o`:
 
    - [Required] `msg.payload` should be a well-written prompt that provides enough information for the model to know what you want and how it should respond. Its success generally depends on the complexity of the task and quality of your prompt. A good rule of thumb is to think about how you would write a word problem for a middle schooler to solve.
 
+   - [Optional] `msg.history` should be an array of objects containing the conversation history. [Default:`[]`]
+   
 2. When `msg.topic` is set to `image`:
 
    - [Required] `msg.payload` should be a prompt of text description of the desired image.

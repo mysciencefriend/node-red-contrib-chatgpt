@@ -1,6 +1,13 @@
 
 # Change Log
 
+## [1.3.0] - 2024-07-08
+
+### Changed
+
+- Removed support for depreciated model `text-davinci-003`. `msg.topic` can no longer be set to `completion`
+- Changed default behavior to use the new `GPT-4o` model. `msg.topic` can be set to `gpt4o`
+
 ## [1.2.17] - 2024-01-17
 
 ### Changed
