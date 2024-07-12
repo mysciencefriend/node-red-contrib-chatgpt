@@ -91,7 +91,7 @@ module.exports = (RED) => {
                 // Process messages with the "image" topic
                 try {
                     // Make a request to OpenAI API for image creation
-                    const response = await openai.createImage({
+                    const response = await openai.images.generate({
                         prompt: msg.payload,
                         n: parseInt(msg.n) || 1,
                         size: msg.size || "256x256",
@@ -175,7 +175,7 @@ module.exports = (RED) => {
                 // Process messages with the "edit" topic
                 try {
                     // Make a request to OpenAI API for edit topic
-                    const response = await openai.createEdit({
+                    const response = await openai.edits.create({
                         model: "text-davinci-edit-001",
                         instruction: msg.payload,
                         n: parseInt(msg.n) || 1,
@@ -222,7 +222,7 @@ module.exports = (RED) => {
                     };
                     msg.history.push(input);
                     // Request completion from gpt-3.5-turbo model
-                    const response = await openai.createChatCompletion({
+                    const response = await openai.chat.completions.create({
                         model: "gpt-3.5-turbo",
                         messages: msg.history,
                         temperature: parseInt(msg.temperature) || 1,
@@ -281,7 +281,7 @@ module.exports = (RED) => {
                     msg.history.push(input);
 
                     // Request completion from GPT-4 model
-                    const response = await openai.createChatCompletion({
+                    const response = await openai.chat.completions.create({
                         model: "gpt-4",
                         messages: msg.history,
                         temperature: parseInt(msg.temperature) || 1,
@@ -329,11 +329,10 @@ module.exports = (RED) => {
             } else {
                 // Process messages with the "gpt4o" topic
                 try {
-                    msg.topic === "gpt4o";
                     // Handle GPT-4 conversation logic
                     if (typeof msg.history === "undefined")
                         msg.history = [];
-                    msg.topic = "gpt4o";
+                    msg.topic = msg.model ? msg.model : "gpt4o";
                     const input = {
                         role: "user",
                         content: msg.payload,
@@ -341,8 +340,8 @@ module.exports = (RED) => {
                     msg.history.push(input);
 
                     // Request completion from GPT-4 model
-                    const response = await openai.createChatCompletion({
-                        model: "gpt-4o",
+                    const response = await openai.chat.completions.create({
+                        model: msg.model ? msg.model : "gpt-4o",
                         messages: msg.history,
                         temperature: parseInt(msg.temperature) || 1,
                         top_p: parseInt(msg.top_p) || 1,

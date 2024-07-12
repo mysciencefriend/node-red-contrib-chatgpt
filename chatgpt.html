@@ -161,6 +161,11 @@
                 <span class="property-type">string</span>
             </dt>
             <dd> The ORGANIZATION to be used if not specified in the node.</dd>
+            
+            <dt class="optional">msg.model
+                <span class="property-type">string</span>
+            </dt>
+            <dd> The model to be selected.</dd>
         </dl>
     
     <h3>Outputs</h3>
@@ -179,6 +184,8 @@
     
     <h3>Details</h3>
         <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>edit</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
+        
+        <p>When is set to <code>read from msg.topic</code> if <code>msg.topic</code> is left undefined then the message property <code>msg.model</code> can be used to select any model.</p>
         
         <p>Alternatively you can set the Topic to <code>read from msg.topic</code> to set the behavior dynamically with incoming messages.</p>
         

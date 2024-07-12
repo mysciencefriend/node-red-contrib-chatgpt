@@ -40,6 +40,8 @@ With these, you're ready to configure your `node-red-contrib-custom-chatgpt` nod
 
 With `node-red-contrib-custom-chatgpt`, you have the power to select the behavior of the node by setting the Topic property value to `gpt4o`, `image`, `edit`, `turbo` , or `gpt4`. You can control the node with a single required message property `msg.payload` or dynamically set the behavior with incoming messages using `read from msg.topic`.
 
+When is set to `read from msg.topic` if `msg.topic` is left undefined then the message property `msg.model` can be used to select any model.
+
 For detailed information on the usage of these modes, please refer to the [OpenAI API documentation](https://beta.openai.com/docs/).
 
 1. When `msg.topic` is set to `gpt4o`:

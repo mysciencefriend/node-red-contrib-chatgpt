@@ -1,6 +1,12 @@
 
 # Change Log
 
+## [1.3.2] - 2024-07-12
+
+### Changed
+
+- Included support for new message property `msg.model` to select any model.
+
 ## [1.3.1] - 2024-07-08
 
 ### Changed
@@ -50,7 +56,7 @@
 
 ### Changed
 
-- Include function calling with GPT-4 model with the msg.functions property
+- Include function calling with GPT-4 model with the `msg.functions` property
 - Updated documentation
 
 
