@@ -1,8 +1,7 @@
 module.exports = (RED) => {
     // Import required modules
     const {
-        Configuration,
-        OpenAIApi
+        OpenAI
     } = require("openai");
 
     // Define a list of acceptable topics for the node
@@ -23,15 +22,13 @@ module.exports = (RED) => {
         // Handle incoming messages
         node.on("input", async(msg) => {
 
-            // Extract API key and organization information from credentials
+            // Extract API key from credentials
             const API_KEY = this.credentials.API_KEY || msg.API_KEY;
-            const ORGANIZATION = this.credentials.Organization || msg.ORGANIZATION;
 
-            // Create OpenAI configuration with the provided API key and organization
-            const configuration = new Configuration({
-                organization: ORGANIZATION,
+            // Create OpenAI configuration with the provided API key
+            const configuration = {
                 apiKey: API_KEY,
-            });
+            };
 
             // Handle BaseUrl configuration if provided
             if (config.BaseUrl) {
@@ -53,7 +50,9 @@ module.exports = (RED) => {
             }
 
             // Initialize the OpenAI API client
-            const openai = new OpenAIApi(configuration);
+            const openai = new OpenAI({
+                apiKey: API_KEY,
+            });
 
             // Set node status to indicate processing
             node.status({

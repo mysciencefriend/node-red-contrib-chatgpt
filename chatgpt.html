@@ -9,7 +9,6 @@
         },
         credentials: {
             API_KEY: {type:"text", required: true },
-            Organization: { type:"text", required: false },
         },
         inputs:1,
         outputs:1,
@@ -48,13 +47,6 @@
         <input type="text" id="node-input-API_KEY" placeholder="OPENAI_API_KEY">
     </div>
     <div class="form-row">
-        <label for="node-input-Organization">
-            <i class="icon-tag"></i>
-            Organization
-        </label>
-        <input type="text" id="node-input-Organization" placeholder="organization">
-    </div>
-    <div class="form-row">
         <label for="node-input-topic">
             <i class="icon-tag"></i>
             Topic
@@ -77,7 +69,6 @@
     
     <h2>Setup</h2>
         <p>When editing the nodes properties, to get your <code>OPENAI_API_KEY</code> log in to <a href="https://chat.openai.com/chat">ChatGPT</a> then visit <a href="https://platform.openai.com/account/api-keys">https://platform.openai.com/account/api-keys</a> click "+ Create new secret key" then copy and paste the "API key" into the nodes <code>API_KEY</code> property value.</p>
-        <p>To get your <code>Organization</code> visit <a href="https://platform.openai.com/account/org-settings">https://platform.openai.com/account/org-settings</a> then copy and paste the "OrganizationID" into the nodes <code>Organization</code> property value.</p>
         <p>If you can't access <a href="https://api.openai.com">https://api.openai.com</a> directly using the default network, you can set up an API proxy (such as Cloudflare WARP), and then set your service's url into the nodes <code>BaseUrl</code> property value.</p>    
 
     <h3>Inputs</h3>
