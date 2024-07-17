@@ -1,14 +1,11 @@
 module.exports = (RED) => {
     // Import required modules
-    const {
-        OpenAI
-    } = require("openai");
+    const { OpenAI } = require("openai");
 
     // Define a list of acceptable topics for the node
     const ACCEPT_TOPIC_LIST = [
         "gpt4o",
         "image",
-        "edit",
         "turbo",
         "gpt4",
         "dalle3",
@@ -21,11 +18,10 @@ module.exports = (RED) => {
 
         // Handle incoming messages
         node.on("input", async(msg) => {
-
-            // Extract API key from credentials
+            // Extract API key from credentials or message
             const API_KEY = this.credentials.API_KEY || msg.API_KEY;
 
-            // Create OpenAI configuration with the provided API key
+            // Initialize OpenAI configuration with the provided API key
             const configuration = {
                 apiKey: API_KEY,
             };
@@ -46,13 +42,12 @@ module.exports = (RED) => {
                         shape: "dot",
                         text: `BaseUrl(${config.BaseUrl}) isn't a valid url`,
                     });
+                    return;
                 }
             }
 
             // Initialize the OpenAI API client
-            const openai = new OpenAI({
-                apiKey: API_KEY,
-            });
+            const openai = new OpenAI({apiKey: API_KEY});
 
             // Set node status to indicate processing
             node.status({
@@ -62,7 +57,7 @@ module.exports = (RED) => {
             });
 
             // Check and normalize the provided topic in the message
-            if (config.topic != "__EMPTY__") {
+            if (config.topic !== "__EMPTY__") {
                 msg.topic = config.topic;
             }
             if (msg.topic) {
@@ -70,19 +65,14 @@ module.exports = (RED) => {
             }
 
             // Validate if the provided topic is in the accepted topic list
-            if (
-                !ACCEPT_TOPIC_LIST.includes(msg.topic) &&
-                msg.topic !== "__empty__") {
+            if (!ACCEPT_TOPIC_LIST.includes(msg.topic) && msg.topic !== "__empty__") {
                 // Set node status and log error if the topic is incorrect
                 node.status({
                     fill: "red",
                     shape: "dot",
                     text: "msg.topic is incorrect",
                 });
-                node.error(
-                    `msg.topic must be a string set to one of the following values: ${ACCEPT_TOPIC_LIST.map(
-                                            (item) => ` '${item}' `
-                    ).join(", ")}`);
+                node.error(`msg.topic must be a string set to one of the following values: ${ACCEPT_TOPIC_LIST.map((item) => ` '${item}' `).join(", ")}`);
 
                 // Send the message
                 node.send(msg);
@@ -94,14 +84,14 @@ module.exports = (RED) => {
                         prompt: msg.payload,
                         n: parseInt(msg.n) || 1,
                         size: msg.size || "256x256",
-                        response_format: msg.format || "b64_json",
+                        response_format: msg.format || "url",
                     });
 
                     // Process the response based on the specified format
-                    if (msg.format === "url") {
-                        msg.payload = response.data.data[0].url;
+                    if (msg.format === "b64_json") {
+                        msg.payload = response.data[0].b64_json;
                     } else {
-                        msg.payload = response.data.data[0].b64_json;
+                        msg.payload = response.data[0].url;
                     }
 
                     // Set additional properties in the message
@@ -125,8 +115,7 @@ module.exports = (RED) => {
                         text: "Error",
                     });
                     if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
+                        node.error(error.response, msg);
                     } else {
                         node.error(error.message, msg);
                     }
@@ -141,7 +130,7 @@ module.exports = (RED) => {
                         n: parseInt(msg.n) || 1,
                         size: msg.size || "1024x1024",
                     });
-                    msg.payload = response.data.data[0].url;
+                    msg.payload = response.data[0].url;
 
                     // Set additional properties in the message
                     msg.full = response;
@@ -164,47 +153,7 @@ module.exports = (RED) => {
                         text: "Error",
                     });
                     if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
-                    } else {
-                        node.error(error.message, msg);
-                    }
-                }
-            } else if (msg.topic === "edit") {
-                // Process messages with the "edit" topic
-                try {
-                    // Make a request to OpenAI API for edit topic
-                    const response = await openai.edits.create({
-                        model: "text-davinci-edit-001",
-                        instruction: msg.payload,
-                        n: parseInt(msg.n) || 1,
-                        input: msg.last || "",
-                        temperature: parseInt(msg.temperature) || 1,
-                        top_p: parseInt(msg.top_p) || 1,
-                    });
-
-                    // Extract completed text from the response
-                    msg.payload = response.data.choices[0].text;
-                    msg.full = response;
-                    // Set node status
-                    node.status({
-                        fill: "blue",
-                        shape: "dot",
-                        text: "Response complete",
-                    });
-                    // Send the message
-                    node.send(msg);
-                    // Handle errors
-                } catch (error) {
-                    // Set node status
-                    node.status({
-                        fill: "red",
-                        shape: "dot",
-                        text: "Error",
-                    });
-                    if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
+                        node.error(error.response, msg);
                     } else {
                         node.error(error.message, msg);
                     }
@@ -234,14 +183,14 @@ module.exports = (RED) => {
                         frequency_penalty: parseInt(msg.frequency_penalty) || 0,
                     });
                     const trimmedContent =
-                        response.data.choices[0].message.content.trim();
+                        response.choices[0].message.content.trim();
                     const result = {
                         role: "assistant",
                         content: trimmedContent,
                     };
                     msg.history.push(result);
                     // Extract completed text from the response
-                    msg.payload = response.data.choices[0].message.content;
+                    msg.payload = response.choices[0].message.content;
                     msg.full = response;
                     // Set node status
                     node.status({
@@ -260,8 +209,7 @@ module.exports = (RED) => {
                         text: "Error",
                     });
                     if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
+                        node.error(error.response, msg);
                     } else {
                         node.error(error.message, msg);
                     }
@@ -293,14 +241,14 @@ module.exports = (RED) => {
                         frequency_penalty: parseInt(msg.frequency_penalty) || 0,
                     });
                     const trimmedContent =
-                        response.data.choices[0].message.content.trim();
+                        response.choices[0].message.content.trim();
                     const result = {
                         role: "assistant",
                         content: trimmedContent,
                     };
                     msg.history.push(result);
                     // Extract completed text from the response
-                    msg.payload = response.data.choices[0].message.content;
+                    msg.payload = response.choices[0].message.content;
                     msg.full = response;
                     // Set node status
                     node.status({
@@ -319,8 +267,7 @@ module.exports = (RED) => {
                         text: "Error",
                     });
                     if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
+                        node.error(error.response, msg);
                     } else {
                         node.error(error.message, msg);
                     }
@@ -352,14 +299,14 @@ module.exports = (RED) => {
                         frequency_penalty: parseInt(msg.frequency_penalty) || 0,
                     });
                     const trimmedContent =
-                        response.data.choices[0].message.content.trim();
+                        response.choices[0].message.content.trim();
                     const result = {
                         role: "assistant",
                         content: trimmedContent,
                     };
                     msg.history.push(result);
                     // Extract completed text from the response
-                    msg.payload = response.data.choices[0].message.content;
+                    msg.payload = response.choices[0].message.content;
                     msg.full = response;
                     // Set node status
                     node.status({
@@ -378,8 +325,7 @@ module.exports = (RED) => {
                         text: "Error",
                     });
                     if (error.response) {
-                        node.error(error.response.status, msg);
-                        node.error(error.response.data, msg);
+                        node.error(error.response, msg);
                     } else {
                         node.error(error.message, msg);
                     }
@@ -395,12 +341,7 @@ module.exports = (RED) => {
     // Register the node type with Node-RED
     RED.nodes.registerType("chatgpt", main, {
         credentials: {
-            API_KEY: {
-                type: "text"
-            },
-            Organization: {
-                type: "text"
-            },
+            API_KEY: { type: "text" },
         },
     });
 };

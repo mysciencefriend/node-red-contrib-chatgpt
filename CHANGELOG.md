@@ -1,11 +1,17 @@
 
 # Change Log
 
+## [1.3.4] - 2024-07-17
+
+### Changed
+
+- Depreciated edits api and complete migration to v4 of openai SDK.
+
 ## [1.3.3] - 2024-07-15
 
 ### Changed
 
-- Properly migrate from v3 to v4 of openai SDK
+- Properly migrate from v3 to v4 of openai SDK.
 
 ## [1.3.2] - 2024-07-12
 

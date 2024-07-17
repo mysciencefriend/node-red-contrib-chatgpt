@@ -32,13 +32,12 @@ npm install node-red-contrib-custom-chatgpt
 ## Setup
 
 - [Follow this guide to get your OpenAI API key](https://platform.openai.com/account/api-keys)
-- [Here's how to get your Organization ID](https://platform.openai.com/account/org-settings)
 
 With these, you're ready to configure your `node-red-contrib-custom-chatgpt` nodes.
 
 ## Usage
 
-With `node-red-contrib-custom-chatgpt`, you have the power to select the behavior of the node by setting the Topic property value to `gpt4o`, `image`, `edit`, `turbo` , or `gpt4`. You can control the node with a single required message property `msg.payload` or dynamically set the behavior with incoming messages using `read from msg.topic`.
+With `node-red-contrib-custom-chatgpt`, you have the power to select the behavior of the node by setting the Topic property value to `gpt4o`, `image`, `turbo` , or `gpt4`. You can control the node with a single required message property `msg.payload` or dynamically set the behavior with incoming messages using `read from msg.topic`.
 
 When is set to `read from msg.topic` if `msg.topic` is left undefined then the message property `msg.model` can be used to select any model.
 
@@ -56,27 +55,21 @@ For detailed information on the usage of these modes, please refer to the [OpenA
 
    - [Optional] `msg.size` should be a string of the desired image dimensions. [Default:`256x256`]
 
-   - [Optional] `msg.format` should be a string of either `b64_json` or `url`. [Default:`b64_json`]
+   - [Optional] `msg.format` should be a string of either `b64_json` or `url`. [Default:`url`] (NOTE: `b64_json` may be depreciated)
 
-3. When `msg.topic` is set to `edit`:
-
-   - [Required] `msg.payload` should be a prompt of text to use as a starting point for the edit.
-
-   - [Required] `msg.last` should be a string of text to use as the input to be edited.
-
-4. When `msg.topic` is set to `turbo`:
+3. When `msg.topic` is set to `turbo`:
 
    - [Required] `msg.payload` should be a well-written prompt that provides enough information for the model to know what you want and how it should respond. Its success generally depends on the complexity of the task and quality of your prompt.
 
    - [Optional] `msg.history` should be an array of objects containing the conversation history. [Default:`[]`]
 
-5. When `msg.topic` is set to `gpt4`:
+4. When `msg.topic` is set to `gpt4`:
 
    - [Required] `msg.payload` should be a well-written prompt that provides enough information for the model to know what you want and how it should respond. Its success generally depends on the complexity of the task and quality of your prompt.
 
    - [Optional] `msg.history` should be an array of objects containing the conversation history. [Default:`[]`]
 
-6. When `msg.topic` is set to `dalle3`:
+5. When `msg.topic` is set to `dalle3`:
 
    - [Required] `msg.payload` should be a prompt of text description of the desired image.
 
@@ -84,7 +77,7 @@ For detailed information on the usage of these modes, please refer to the [OpenA
    
 ### Additional optional properties
 
-The following optional inputs are supported - `msg.max_tokens`, `msg.suffix`, `msg.n`, `msg.temperature`, `msg.top_p`, `msg.presence_penalty`, `msg.frequency_penalty`, `msg.echo`, `msg.API_KEY` and `msg.ORGANIZATION`. See the nodes built-in help tab for more information on how they are used.
+The following optional inputs are supported - `msg.max_tokens`, `msg.suffix`, `msg.n`, `msg.temperature`, `msg.top_p`, `msg.presence_penalty`, `msg.frequency_penalty`, `msg.echo`, and `msg.API_KEY` See the nodes built-in help tab for more information on how they are used.
 
 ## Examples
 

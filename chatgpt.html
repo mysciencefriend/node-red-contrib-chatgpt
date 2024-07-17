@@ -22,7 +22,6 @@
                 value: "topic",
                 options: [
                     { value: "gpt4o", label: "gpt4o"},
-                    { value: "edit", label: "edit"},
                     { value: "image", label: "image"},
                     { value: "turbo", label: "turbo"},
                     { value: "gpt4", label: "gpt4"},
@@ -148,11 +147,6 @@
             </dt>
             <dd> The API key to be used if not specified in the node.</dd>
             
-            <dt class="optional">msg.ORGANIZATION
-                <span class="property-type">string</span>
-            </dt>
-            <dd> The ORGANIZATION to be used if not specified in the node.</dd>
-            
             <dt class="optional">msg.model
                 <span class="property-type">string</span>
             </dt>
@@ -174,7 +168,7 @@
         </ol>
     
     <h3>Details</h3>
-        <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>edit</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
+        <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
         
         <p>When is set to <code>read from msg.topic</code> if <code>msg.topic</code> is left undefined then the message property <code>msg.model</code> can be used to select any model.</p>
         
@@ -187,21 +181,17 @@
         <p>2. When <code>msg.topic</code> is set to <code>image</code>:</p>
         <p>Required <code>msg.payload</code> should be a prompt of text description of the desired image.</p>
         <p>Optional <code>msg.size</code> should be a string of the desired image dimensions. [Default:<code>256x256</code>]</p>
-        <p>Optional <code>msg.format</code> should be a string of either <code>b64_json</code> or <code>url</code>. [Default:<code>b64_json</code>]</p>
+        <p>Optional <code>msg.format</code> should be a string of either <code>b64_json</code> (NOTE: <code>b64_json</code> may be depreciated) or <code>url</code>. [Default:<code>url</code>]</p>
         
-        <p>3. When <code>msg.topic</code> is set to <code>edit</code>:</p>
-        <p>Required <code>msg.payload</code> should be a prompt of text to use as a starting point for the edit.</p>
-        <p>Required <code>msg.last</code> should be a string of text to use as the input to be edited.</p>
-        
-        <p>4. When <code>msg.topic</code> is set to <code>turbo</code>:</p>
+        <p>3. When <code>msg.topic</code> is set to <code>turbo</code>:</p>
         <p>Required <code>msg.payload</code> should be a well-written prompt.</p>
         <p>Optional <code>msg.history</code> should be an array of objects containing the conversation history. [Default:<code>[]</code>]</p>
         
-        <p>5. When <code>msg.topic</code> is set to <code>gpt4</code>:</p>
+        <p>4. When <code>msg.topic</code> is set to <code>gpt4</code>:</p>
         <p>Required <code>msg.payload</code> should be a well-written prompt.</p>
         <p>Optional <code>msg.history</code> should be an array of objects containing the conversation history. [Default:<code>[]</code>]</p>
 
-        <p>6. When <code>msg.topic</code> is set to <code>dalle3</code>:</p>
+        <p>5. When <code>msg.topic</code> is set to <code>dalle3</code>:</p>
         <p>Required <code>msg.payload</code> should be a prompt of text description of the desired image.</p>
         <p>Optional <code>msg.size</code> should be a string of the desired image dimensions. [Default:<code>1024x1024</code>]</p>
     <h3>Links</h3>
