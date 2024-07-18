@@ -75,6 +75,12 @@ For detailed information on the usage of these modes, please refer to the [OpenA
 
    - [Optional] `msg.size` should be a string of the desired image dimensions. [Default:`1024x1024`]
    
+6. When `msg.topic` is set to `gpt-4o-mini`:
+
+   - [Required] `msg.payload` should be a well-written prompt that provides enough information for the model to know what you want and how it should respond. Its success generally depends on the complexity of the task and quality of your prompt.
+
+   - [Optional] `msg.history` should be an array of objects containing the conversation history. [Default:`[]`]
+   
 ### Additional optional properties
 
 The following optional inputs are supported - `msg.max_tokens`, `msg.suffix`, `msg.n`, `msg.temperature`, `msg.top_p`, `msg.presence_penalty`, `msg.frequency_penalty`, `msg.echo`, and `msg.API_KEY` See the nodes built-in help tab for more information on how they are used.

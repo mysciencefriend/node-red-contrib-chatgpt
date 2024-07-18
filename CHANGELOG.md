@@ -1,6 +1,16 @@
 
 # Change Log
 
+## [1.3.5] - 2024-07-18
+
+### Added
+
+- Included preliminary support for for additional OpenAI model `gpt-4o-mini`. Set `msg.topic` to `gpt-4o-mini` to select the new model.
+
+### Changed
+
+- Changed default behavior to use the new `GPT-4o-mini` model when no topic is selected.
+
 ## [1.3.4] - 2024-07-17
 
 ### Changed
@@ -15,13 +25,13 @@
 
 ## [1.3.2] - 2024-07-12
 
-### Changed
+### Added
 
 - Included support for new message property `msg.model` to select any model.
 
 ## [1.3.1] - 2024-07-08
 
-### Changed
+### Added
 
 - Included support for image generation with the model `dall-e-3`
 
@@ -43,6 +53,9 @@
 ### Changed
 
 - Reverted function calling with GPT-4 model due to issues
+
+### Added
+
 - Included support for message properties `msg.API_KEY` and `msg.ORGANIZATION`
 
 ## [1.2.15] - 2024-01-12

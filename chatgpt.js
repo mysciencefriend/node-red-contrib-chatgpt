@@ -4,6 +4,7 @@ module.exports = (RED) => {
 
     // Define a list of acceptable topics for the node
     const ACCEPT_TOPIC_LIST = [
+        "gpt-4o-mini",
         "gpt4o",
         "image",
         "turbo",
@@ -272,7 +273,7 @@ module.exports = (RED) => {
                         node.error(error.message, msg);
                     }
                 }
-            } else {
+            } else if (msg.topic === "gpt4o") {
                 // Process messages with the "gpt4o" topic
                 try {
                     // Handle GPT-4 conversation logic
@@ -288,6 +289,64 @@ module.exports = (RED) => {
                     // Request completion from GPT-4 model
                     const response = await openai.chat.completions.create({
                         model: msg.model ? msg.model : "gpt-4o",
+                        messages: msg.history,
+                        temperature: parseInt(msg.temperature) || 1,
+                        top_p: parseInt(msg.top_p) || 1,
+                        n: parseInt(msg.n) || 1,
+                        stream: msg.stream || false,
+                        stop: msg.stop || null,
+                        max_tokens: parseInt(msg.max_tokens) || 4000,
+                        presence_penalty: parseInt(msg.presence_penalty) || 0,
+                        frequency_penalty: parseInt(msg.frequency_penalty) || 0,
+                    });
+                    const trimmedContent =
+                        response.choices[0].message.content.trim();
+                    const result = {
+                        role: "assistant",
+                        content: trimmedContent,
+                    };
+                    msg.history.push(result);
+                    // Extract completed text from the response
+                    msg.payload = response.choices[0].message.content;
+                    msg.full = response;
+                    // Set node status
+                    node.status({
+                        fill: "blue",
+                        shape: "dot",
+                        text: "Response complete",
+                    });
+                    // Send the message
+                    node.send(msg);
+                    // Handle errors
+                } catch (error) {
+                    // Set node status
+                    node.status({
+                        fill: "red",
+                        shape: "dot",
+                        text: "Error",
+                    });
+                    if (error.response) {
+                        node.error(error.response, msg);
+                    } else {
+                        node.error(error.message, msg);
+                    }
+                }
+            } else {
+                // Process messages with the "gpt-4o-mini" topic
+                try {
+                    // Handle GPT-4 conversation logic
+                    if (typeof msg.history === "undefined")
+                        msg.history = [];
+                    msg.topic = msg.model ? msg.model : "gpt-4o-mini";
+                    const input = {
+                        role: "user",
+                        content: msg.payload,
+                    };
+                    msg.history.push(input);
+
+                    // Request completion from GPT-4 model
+                    const response = await openai.chat.completions.create({
+                        model: msg.model ? msg.model : "gpt-4o-mini",
                         messages: msg.history,
                         temperature: parseInt(msg.temperature) || 1,
                         top_p: parseInt(msg.top_p) || 1,

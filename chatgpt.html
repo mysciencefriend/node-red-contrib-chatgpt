@@ -168,7 +168,7 @@
         </ol>
     
     <h3>Details</h3>
-        <p>Select the node's behavior by setting the Topic property value to <code>gpt4o</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
+        <p>Select the node's behavior by setting the Topic property value to <code>gpt-4o-mini</code>, <code>gpt4o</code>, <code>image</code>, <code>turbo</code>, <code>gpt4</code>, or <code>dalle3</code>.</p>
         
         <p>When is set to <code>read from msg.topic</code> if <code>msg.topic</code> is left undefined then the message property <code>msg.model</code> can be used to select any model.</p>
         
@@ -194,6 +194,10 @@
         <p>5. When <code>msg.topic</code> is set to <code>dalle3</code>:</p>
         <p>Required <code>msg.payload</code> should be a prompt of text description of the desired image.</p>
         <p>Optional <code>msg.size</code> should be a string of the desired image dimensions. [Default:<code>1024x1024</code>]</p>
+        
+        <p>6. When <code>msg.topic</code> is set to <code>gpt-4o-mini</code>:</p>
+        <p>Required <code>msg.payload</code> should be a well-written prompt.</p>
+        <p>Optional <code>msg.history</code> should be an array of objects containing the conversation history. [Default:<code>[]</code>]</p>
     <h3>Links</h3>
         <ul>
             <li><a href="https://github.com/HaroldPetersInskipp/node-red-contrib-chatgpt">GitHub</a> - this node's GitHub repository.</li>
