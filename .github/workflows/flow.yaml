@@ -1,0 +1,14 @@
+name: Node-Red Flow Catalogue Updater
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-flow:
+    runs-on: ubuntu-latest
+    name: Node-Red Flow Refresh
+    steps:
+    - name: POST
+      uses: hacksore/node-red-flow@v2
+      with:
+        repo: 'node-red-contrib-custom-chatgpt'
