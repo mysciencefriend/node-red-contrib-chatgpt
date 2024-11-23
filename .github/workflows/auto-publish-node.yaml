@@ -1,8 +1,7 @@
-name: Publish node-red-contrib-custom-chatgpt to npm
+name: Publish package to npm and update flow catalog
 
 on:
-  release:
-    types: [published] # Trigger workflow when a release is published
+  workflow_dispatch:
     
 jobs:
   build:
@@ -35,3 +34,13 @@ jobs:
       # Verify Published Package (optional)
       - name: Verify Published Package
         run: npm info node-red-contrib-custom-chatgpt
+        
+  update-flow:
+    runs-on: ubuntu-latest
+    name: Node-Red Flow Refresh
+    needs: build
+    steps:
+    - name: POST
+      uses: hacksore/node-red-flow@v2
+      with:
+        repo: 'node-red-contrib-custom-chatgpt'
