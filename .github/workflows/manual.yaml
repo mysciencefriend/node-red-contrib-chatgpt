@@ -1,4 +1,4 @@
-name: Publish node-red-contrib-custom-chatgpt to npm
+name: Manually publish node-red-contrib-custom-chatgpt to npm
 
 on:
   workflow_dispatch:
