@@ -1,5 +1,14 @@
-
 # Change Log
+
+## [1.3.6] - 2024-11-23
+
+### Added
+
+- Included YAML file for GitHub Actions integration to auto publish to NPM on release.
+
+### Changed
+
+- Updated dependency `openai` to current version.
 
 ## [1.3.5] - 2024-07-18
 
