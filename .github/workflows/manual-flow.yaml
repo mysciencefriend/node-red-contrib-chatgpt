@@ -1,4 +1,4 @@
-name: Node-Red Flow Catalogue Updater
+name: Manual Node-Red Flow Catalogue Updater
 
 on:
   workflow_dispatch:
