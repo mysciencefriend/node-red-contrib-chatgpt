@@ -170,7 +170,7 @@ module.exports = (RED) => {
                         n: parseInt(msg.n) || 1,
                         size: msg.size || "1024x1024",
                     });
-                    msg.payload = response.full.data[0].b64_json;
+                    msg.payload = response.data[0].b64_json;
 
                     // Set additional properties in the message
                     msg.full = response;
