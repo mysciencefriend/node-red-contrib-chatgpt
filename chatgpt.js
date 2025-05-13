@@ -10,6 +10,7 @@ module.exports = (RED) => {
         "turbo",
         "gpt4",
         "dalle3",
+        "gpt-image-1",
     ].map((item) => item.toLowerCase());
 
     // Main function that gets executed when a message is received
